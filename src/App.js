@@ -1,35 +1,63 @@
 import React,{useState} from 'react'
 import './App.css';
+import TodoForm from './TodoForm';
+import TodoList from './TodoList';
+import TodoFooter from './TodoFooter';
 
 function App() {
 
-const [value,setValue] = useState(0)
-// const backgroundColors = ['black','goldenrod','crimson','skyblue','purple']
+const [todos,setTodos] = useState([
+  {
+    id:Math.random(),
+    text:'Learn JS',
+    isCompleted:false
 
-// const changeState = () => {
-//   const randomColor = Math.floor(Math.random()*backgroundColors.length)
-//   const choosenColor = backgroundColors[randomColor]
-//   setValue(choosenColor)
+  },
+  {
+    id:Math.random(),
+    text:'Learn CSS',
+    isCompleted:false
+  },
+  {
+    id:Math.random(),
+    text:'Learn React',
+    isCompleted:false
+  }
+]);
+  
 
-// }
-const decrement = () =>{
-  value !== 0 &&  setValue(value-1)
-}
-const increment = () =>{
-  value !== 100 && setValue(value+1)
-}
+ return (
+  <div className='App'>
+  <TodoForm onAdd={(text) =>{
+    setTodos([
+    ...todos,
+    {
+      id:Math.random(),
+      text:text,
+      isCompleted:false
+    }
+    ]);
+  }}/>
+  <TodoList 
+  todos = {todos}
+  onDelete={(todo) => {
+  setTodos(todos.filter((t) => t.id !== todo.id));
+  }}
 
-
-
-  return (
-    <div className="App" style ={{background:value}}>
-      {/* <button onClick = {changeState}>{value}</button>
-      <h1>{value ? 'Hello world' : 'Good bye'}</h1> */}
-      <button onClick = {decrement}></button>
-      <p>{value}</p>
-      <button onClick = {increment}></button>
+  onChange={(newTodo) =>{
+   setTodos(todos.map((todo) => {
+      if(todo.id === newTodo.id) {
+        return newTodo;
+      }
+      return todo;
+    }));
+  }}
+  />
+  <TodoFooter  todos = {todos} onClearCompleted={() => {
+    setTodos(todos.filter((todo)=> !todo.isCompleted));
+  }}/>
     </div>
-  );
+    );
 }
 
 export default App;

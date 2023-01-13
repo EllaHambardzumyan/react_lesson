@@ -1,0 +1,11 @@
+.todoAppForm{
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+.todoAppAddButton{
+    border: 0;
+    color: red;
+    width: 60px;
+    cursor: pointer;
+}
